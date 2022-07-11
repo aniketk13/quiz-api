@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Question = require('./models/Question') //includes our model
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     return res.status(200).send("Welcome to the Quiz")
 })
 // get all quiz questions
