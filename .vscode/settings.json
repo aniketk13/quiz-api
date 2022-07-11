@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/fc9f0b5b-5f0c-4b37-b647-9ce0dc8756e0/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/quiz-testing",
-    "appService.deploySubpath": "."
-}
