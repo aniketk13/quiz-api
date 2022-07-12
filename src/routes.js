@@ -35,14 +35,23 @@ router.get('/questions/:id', async (req, res) => {
 // create one quiz question
 router.post('/questions', async (req, res) => {
     try {
-        const { description } = req.body
-        const { alternatives } = req.body
+        const { question } = req.body
+        const { option1 } = req.body
+        const { option2 } = req.body
+        const { option3 } = req.body
+        const { option4 } = req.body
+        const { correct_option } = req.body
 
-        const question = await Question.create({
-            description,
-            alternatives
+        const question_created = await Question.create({
+            question,
+            option1,
+            option2,
+            option3,
+            option4,
+            correct_option
+
         })
-        return res.status(201).json(question)
+        return res.status(201).json(question_created)
     } catch (error) {
         return res.status(500).json({ "error": error })
     }
@@ -52,22 +61,36 @@ router.post('/questions', async (req, res) => {
 router.put('/questions/:id', async (req, res) => {
     try {
         const _id = req.params.id
-        const { description, alternatives } = req.body
+        const { question, option1, option2, option3, option4, correct_option } = req.body
 
-        let question = await Question.findOne({ _id })
+        let question_find = await Question.findOne({ _id })
+        console.log("Now printing question")
+        console.log(question_find)
+        console.log(question)
+        console.log(req.body)
 
-        if (!question) {
-            question = await Question.create({
-                description,
-                alternatives
+        if (!question_find) {
+            const question_new = await Question.create({
+                question,
+                option1,
+                option2,
+                option3,
+                option4,
+                correct_option
             })
-            return res.status(201).json(question)
+            return res.status(201).json(question_new)
         }
         else {
-            question.description = description
-            question.alternatives = alternatives
-            await question.save()
-            return res.status(200).json(question)
+            question_find.question = question
+            question_find.option1 = option1
+            question_find.option2 = option2
+            question_find.option3 = option3
+            question_find.option4 = option4
+            question_find.correct_option = correct_option
+            await question_find.save()
+            console.log("Now printing another question")
+            console.log(question_find)
+            return res.status(200).json(question_find)
         }
     } catch (error) {
         return res.status(500).json({ "error": error })
